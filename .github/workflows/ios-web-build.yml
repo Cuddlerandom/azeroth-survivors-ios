@@ -1,0 +1,26 @@
+name: iOS Web Build
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32-unknown-unknown
+      - name: Free runner disk space
+        run: sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL
+      - name: Set up WebAssembly toolchain
+        run: scripts/web-setup.sh
+      - name: Compile browser client
+        run: scripts/web-build.sh
+      - name: Upload browser files
+        uses: actions/upload-artifact@v4
+        with:
+          name: azeroth-survivors-ios-web
+          path: web/dist/
+          retention-days: 7
