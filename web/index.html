@@ -63,7 +63,9 @@
   // Dev page: allow `?user=&pass=&char=` links to log in. A hosting page that fetched the
   // credentials itself sets `window.__wenilla_env = {user, pass, host}` here instead, and the
   // client then never reads credentials from the URL (`benilla_app::webenv`).
-  window.__wenilla_env = { dev_query_creds: '1' };
+  // Launch the offline/local Survivors mode directly, without realm credentials.
+  // World assets may still be requested from /data/ by the game renderer.
+  window.__wenilla_env = { survivors: '1' };
 </script>
 <script type="module">
   import { installTouchMenus } from './ios-touch-menus.js';
