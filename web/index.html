@@ -66,6 +66,8 @@
   window.__wenilla_env = { dev_query_creds: '1' };
 </script>
 <script type="module">
+  import { installTouchMenus } from './ios-touch-menus.js';
+  installTouchMenus(document.getElementById('benilla'));
   import init from './wenilla.js';
   import { bind } from './wasi_stubs.js';
   import { boot } from './boot.js';
