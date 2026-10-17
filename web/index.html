@@ -58,6 +58,16 @@
     };
   }
 </script>
+<script>
+  // iOS Safari does not implement the legacy WebKit fullscreen API on canvas.
+  // The wasm client calls this method during startup; treat fullscreen as optional
+  // rather than throwing and aborting the entire game before it can render.
+  if (typeof HTMLCanvasElement.prototype.webkitRequestFullscreen !== 'function') {
+    HTMLCanvasElement.prototype.webkitRequestFullscreen = function () {
+      // The page already fills the viewport through CSS. No fullscreen request needed.
+    };
+  }
+</script>
 <canvas id="benilla"></canvas>
 <script>
   // Dev page: allow `?user=&pass=&char=` links to log in. A hosting page that fetched the
