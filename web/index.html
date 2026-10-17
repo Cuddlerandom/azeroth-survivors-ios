@@ -89,7 +89,9 @@
   // out, commands in, the hidden-tab keepalive. Dynamic, never load-bearing. `?bridge=hud` /
   // `?bridge=idle` mount an example from web/examples/ on top; `?bridge=0` turns it off.
   import('./bridge.js')
-    .then(() => {
+    .then(async ({ wenilla }) => {
+      const { installMobileJoystick } = await import('./ios-joystick.js');
+      installMobileJoystick(wenilla);
       const example = new URLSearchParams(location.search).get('bridge');
       if (example && /^[a-z]+$/.test(example) && example !== '0') {
         import(`./examples/${example}.js`).catch((e) => console.warn(`examples/${example}.js:`, e));
